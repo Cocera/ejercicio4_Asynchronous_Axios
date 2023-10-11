@@ -16,10 +16,22 @@ const showUsers = () => {
     usersDOM.innerHTML = '';
     users.forEach(user => {
         usersDOM.innerHTML += `
-        <div class="card">
+        <div class="card mt-3">
             <div class="card-body">${user}</div>
         </div>`
     })
 };
 
 btnShowUsers.addEventListener('click', showUsers);
+
+
+
+
+const dogBreeds = [];
+
+axios.get('https://dog.ceo/api/breeds/list/all')
+    .then(breed => {console.log(breed.data.message)})
+    .catch(err => console.error(err, 'Ups! Algo ha ido mal'))
+
+console.log(dogBreeds)
+
