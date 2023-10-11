@@ -1,7 +1,10 @@
 
+const btnShowUsers = document.getElementById('btnShowUsers');
+const btnShowDogs = document.getElementById('btnShowDogs');
+const btnRandomImg = document.getElementById('btnRandomImg');
+const printDOM = document.getElementById('printDOM');
 
 const users = [];
-const btnShowUsers = document.getElementById('btnShowUsers');
 
 axios.get('https://jsonplaceholder.typicode.com/users')
     .then(res => {
@@ -12,11 +15,10 @@ axios.get('https://jsonplaceholder.typicode.com/users')
     .catch(err => console.error(err, 'Ups! Algo ha ido mal'))
 
 const showUsers = () => {
-    const usersDOM = document.getElementById('usersDOM');
-    usersDOM.innerHTML = '';
+    printDOM.innerHTML = '';
     users.forEach(user => {
-        usersDOM.innerHTML += `
-        <div class="card mt-3">
+        printDOM.innerHTML += `
+        <div class="card mt-3 me-3 col-6 col-sm-4 shadow-sm rounded">
             <div class="card-body">${user}</div>
         </div>`
     })
@@ -27,11 +29,44 @@ btnShowUsers.addEventListener('click', showUsers);
 
 
 
-const dogBreeds = [];
+let dogBreeds = [];
 
 axios.get('https://dog.ceo/api/breeds/list/all')
-    .then(breed => {console.log(breed.data.message)})
+    .then(breed => {
+        const dataBreed = breed.data.message;
+        dogBreeds = Object.keys(dataBreed);
+    })
     .catch(err => console.error(err, 'Ups! Algo ha ido mal'))
 
-console.log(dogBreeds)
+const showDogs = () => {
+    printDOM.innerHTML = '';
+    dogBreeds.forEach(breed => {
+        printDOM.innerHTML += `
+        <div class="card mt-3 me-3 col-6 col-sm-3 shadow-sm rounded">
+            <div class="card-body">${breed}</div>
+        </div>`
+    })
+};
+
+btnShowDogs.addEventListener('click', showDogs);
+
+
+
+
+const getRandomImg = () => {
+    axios.get("https://dog.ceo/api/breeds/image/random")
+    .then(img => {
+        printDOM.innerHTML = '';
+        printDOM.innerHTML = `<img src="${img.data.message}" class="h-100 w-auto rounded-3" alt="...">`;
+    })
+    .catch(err => console.error(err, 'Ups! Algo ha ido mal'));
+};
+
+btnRandomImg.addEventListener('click', getRandomImg);
+
+
+
+
+
+
 
