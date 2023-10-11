@@ -2,6 +2,8 @@
 const btnShowUsers = document.getElementById('btnShowUsers');
 const btnShowDogs = document.getElementById('btnShowDogs');
 const btnRandomImg = document.getElementById('btnRandomImg');
+const btnBreedImgs = document.getElementById('btnBreedImgs');
+const userBreedSelection = document.getElementById('userBreedValue');
 const printDOM = document.getElementById('printDOM');
 
 const users = [];
@@ -54,15 +56,39 @@ btnShowDogs.addEventListener('click', showDogs);
 
 
 const getRandomImg = () => {
+    printDOM.innerHTML = '';
+
     axios.get("https://dog.ceo/api/breeds/image/random")
     .then(img => {
-        printDOM.innerHTML = '';
-        printDOM.innerHTML = `<img src="${img.data.message}" class="h-100 w-auto rounded-3" alt="...">`;
+        printDOM.innerHTML += `<img src="${img.data.message}" class="h-auto w-100 mt-3" alt="...">`;
     })
     .catch(err => console.error(err, 'Ups! Algo ha ido mal'));
 };
 
 btnRandomImg.addEventListener('click', getRandomImg);
+
+
+
+
+const getBreedImgs = () => {
+    printDOM.innerHTML = '';
+
+    const srcImgBreed = `https://dog.ceo/api/breed/${userBreedSelection.value}/images`
+    axios.get(srcImgBreed)
+    .then (img => {
+        img.data.message.forEach(src => {
+            printDOM.innerHTML += `
+            <div class="card mt-3 me-3 col-6 col-sm-3 rounded">
+                <img src="${src}" class="h-20 object-fit-fill" alt="...">
+            </div>`
+        });    
+    })
+    .catch(err => console.error(err, 'Ups! Algo ha ido mal'));
+};
+
+btnBreedImgs.addEventListener('click', getBreedImgs)
+
+
 
 
 
