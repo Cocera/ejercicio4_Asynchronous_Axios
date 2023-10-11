@@ -55,6 +55,7 @@ btnShowDogs.addEventListener('click', showDogs);
 
 
 
+
 const getRandomImg = () => {
     printDOM.innerHTML = '';
 
